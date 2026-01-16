@@ -1,14 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AI Trade UI</title>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<title>AI Trade UI</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background:#f4f6f8;
+}
+.container {
+  display:flex;
+  gap:20px;
+  padding:30px;
+}
+.card {
+  width:260px;
+  padding:20px;
+  border-radius:12px;
+  color:#fff;
+}
+.green { background:#2ecc71; }
+.red { background:#e74c3c; }
+.orange { background:#f39c12; }
+.price {
+  font-size:22px;
+  font-weight:bold;
+}
+.small {
+  font-size:13px;
+  margin-top:6px;
+}
+</style>
 </head>
-<body style="font-family: Arial; text-align:center; padding-top:50px;">
 
-  <h1>AI Trade UI</h1>
-  <p>Welcome Vishal 👋</p>
-  <p>Website successfully live ho gayi hai ✅</p>
+<body>
+
+<h2 style="padding-left:30px;">AI Trade UI – Live Demo</h2>
+
+<div class="container">
+
+  <div id="infy" class="card green">
+    <h3>INFY</h3>
+    <div class="price" id="infyPrice">₹----</div>
+    <div class="small">RSI: <span id="infyRsi"></span></div>
+  </div>
+
+  <div id="sbicard" class="card green">
+    <h3>SBICARD</h3>
+    <div class="price" id="sbicardPrice">₹----</div>
+    <div class="small">RSI: <span id="sbicardRsi"></span></div>
+  </div>
+
+</div>
+
+<script>
+function random(min, max) {
+  return (Math.random() * (max - min) + min).toFixed(2);
+}
+
+function updateStock(id, basePrice) {
+  let price = random(basePrice-10, basePrice+10);
+  let rsi = random(30, 75);
+
+  document.getElementById(id+"Price").innerText = "₹" + price;
+  document.getElementById(id+"Rsi").innerText = rsi;
+
+  let card = document.getElementById(id);
+  card.className = "card";
+
+  if (rsi > 60) card.classList.add("green");
+  else if (rsi < 40) card.classList.add("red");
+  else card.classList.add("orange");
+}
+
+function loadLive() {
+  updateStock("infy", 1600);
+  updateStock("sbicard", 720);
+}
+
+loadLive();
+setInterval(loadLive, 5000);
+</script>
 
 </body>
 </html>
