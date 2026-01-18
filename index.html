@@ -65,3 +65,27 @@ setInterval(updatePrices, 3000);
 
 </body>
 </html>
+<script>
+async function fetchPrice(symbol, elementId) {
+  try {
+    const res = await fetch(
+      `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1m`
+    );
+    const data = await res.json();
+    const price = data.chart.result[0].meta.regularMarketPrice;
+    document.getElementById(elementId).innerText = "₹ " + price.toFixed(2);
+  } catch (e) {
+    document.getElementById(elementId).innerText = "Data error";
+  }
+}
+
+// Initial load
+fetchPrice("INFY.NS", "infyPrice");
+fetchPrice("SBICARD.NS", "sbiPrice");
+
+// Auto refresh every 10 sec
+setInterval(() => {
+  fetchPrice("INFY.NS", "infyPrice");
+  fetchPrice("SBICARD.NS", "sbiPrice");
+}, 10000);
+</script>
